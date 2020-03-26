@@ -21,4 +21,4 @@ jobs:
     steps:
       - checkout
       - run:
-         shell: ./deploy.sh
+         shell: ../deploy.sh
