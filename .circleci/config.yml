@@ -7,5 +7,5 @@ jobs:
       - checkout
       - run:
         command: |
-          
+          name: run
           docker build -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1 .
