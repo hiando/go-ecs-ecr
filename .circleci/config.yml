@@ -11,5 +11,4 @@ jobs:
     steps:
       - checkout
       - run:
-          command:
-docker run -d -p 80:80 --name nginx-sample-webapp $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1
+          command: docker run -d -p 80:80 --name nginx-sample-webapp $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1
