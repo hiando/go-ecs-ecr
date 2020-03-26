@@ -10,22 +10,10 @@ workflows:
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
-machine:
-  services:
-    - docker
-
-dependencies:
-  post:
-    - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1 .
-
-test:
-  post:
-    - docker run -d -p 80:80 --name nginx-sample-webapp $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1; sleep 10
-    - curl --retry 10 --retry-delay 5 localhost:80 | grep "Hello World!"
-
-deployment:
-  prod:
-    branch: master
-    commands:
-      - ./deploy.sh
+      build:
+       machine: true
+       steps:
+        - checkout
+        - run: docker run -d -p 80:80 --name nginx-sample-webapp $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1; sleep 10
+    - run: curl --retry 10 --retry-delay 5 localhost:80 | grep "Hello World!"
+    - run: docker build -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast.amazonaws.com/nginx-sample-webapp:$CIRCLE_SHA1 .
